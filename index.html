@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CROWDCOUNT WEB APP</title>
+    <script type="text/javascript" src="/eel.js"></script>
+    <script src="countpeople.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    h1 {
+      color: #007BFF;
+    }
+
+    #crowdImageContainer {
+      margin-top: 20px;
+    }
+
+    #crowdImage {
+      max-width: 100%;
+    }
+
+    #countButton {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 18px;
+      background-color: #007BFF;
+      color: #FFF;
+      border: none;
+      cursor: pointer;
+    }
+
+    #resultText {
+      margin-top: 20px;
+    }
+
+    #quit{
+      display: flex;
+      margin-left: 80%;
+    }
+
+    #login-as-adm{
+      display: flex;
+      align-items: center;
+      padding-left: 45%;
+    }
+
+    #login-as-use{
+      display: flex;
+      align-items: center;
+      padding-left: 45%;
+    }
+  </style>
+</head>
+<body>
+    <h1>Welcome to CrowdCount!</h1>
+    <div class="top">
+        
+        <p>Count the number of people in a crowd using this app.</p>
+        <button id="quit">Quit</button>
+      </div>
+        <div id="crowdImageContainer">
+          <img id="crowdImage" src="peoplegathered.jpg" alt="gathered people">
+        </div>
+        <script src="countpeople.js"></script>
+    <br>
+  <form id="crowdForm">
+    <div class="login-as-admin" id="login-as-adm">
+        <button onclick="getCrowdCount.html" id="button">login as</button>
+    </div>
+    <br>
+    <div class="login-as-user" id="login-as-use">
+      <button id="user-btn">
+        Login as User
+      </button>
+    </div>
+    <br>
+    <label for="countInput">Get Crowd Count:</label>
+    <input type="number" id="countInput" name="countInput">
+    <button type="submit">Submit</button>
+  </form>
+  <div id="resultContainer">
+    <form onsubmit="submitForm(); return false;">
+        <label for="userno">User Number:</label>
+        <input type="number" id="userno" name="userno">
+        <br>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name">
+        <br>
+        <label for="gender">Gender:</label>
+        <input type="text" id="gender" name="gender">
+        <br>
+        <label for="review">Review about events:</label>
+        <textarea id="review" name="review"></textarea>
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script type="text/javascript">
+        function submitForm() {
+            var userno = document.getElementById('userno').value;
+            var name = document.getElementById('name').value;
+            var gender = document.getElementById('gender').value;
+            var review = document.getElementById('review').value;
+
+            eel.accountexistfun1()(userno, name, gender, review);
+        }
+    </script>
+
+<h2>Sign In Menu</h2>
+<form onsubmit="submitForm(); return false;">
+    <label for="userno">User Number:</label>
+    <input type="number" id="userno" name="userno">
+    <br>
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name">
+    <br>
+    <label for="gender">Gender:</label>
+    <input type="text" id="gender" name="gender">
+    <br>
+    <label for="review">Review about events:</label>
+    <textarea id="review" name="review"></textarea>
+    <br>
+    <button type="submit">Submit</button>
+</form>
+
+<script type="text/javascript">
+    function submitForm() {
+        var userno = document.getElementById('userno').value;
+        var name = document.getElementById('name').value;
+        var gender = document.getElementById('gender').value;
+        var review = document.getElementById('review').value;
+
+        eel.signinmenuchoice()(userno, name, gender, review);
+    }
+</script>
+
+<h3>Previous Responses</h3>
+    <form onsubmit="submitForm(); return false;">
+        <label for="userno">User Number:</label>
+        <input type="number" id="userno" name="userno">
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+
+    <div id="response"></div>
+
+    <script type="text/javascript">
+        function submitForm() {
+            var userno = document.getElementById('userno').value;
+
+            eel.prevcomp()(userno);
+        }
+
+        function showResponse(data) {
+            var responseDiv = document.getElementById('response');
+            responseDiv.innerHTML = '<h2>Previous Responses</h2>' + data;
+        }
+    </script>
+
+<h4>Admin Login</h4>
+<form onsubmit="submitForm(); return false;">
+    <label for="loginid">Login ID:</label>
+    <input type="number" id="loginid" name="loginid">
+    <br>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password">
+    <br>
+    <button type="submit">Submit</button>
+</form>
+
+<script type="text/javascript">
+    function submitForm() {
+        var loginid = document.getElementById('loginid').value;
+        var password = document.getElementById('password').value;
+
+        eel.adminloginmenu()(loginid, password);
+    }
+</script>
+
+<h5>NewComps Management System</h5>
+    <h2>All NewComps</h2>
+    
+        <tr>
+            <th>User No.</th>
+            <th>Name</th>
+            <th>Regarding</th>
+            <th>Response</th>
+        </tr>
+        <!-- Backend code will populate data here -->
+    </table>
+    <h6>Provide Response</h6>
+    <form action="response" method="post">
+        <label for="userno">User No.:</label>
+        <input type="number" id="userno" name="userno" required><br><br>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+        <label for="regarding">Regarding:</label>
+        <input type="text" id="regarding" name="regarding" required><br><br>
+        <label for="response">Response:</label><br>
+        <textarea id="response" name="response" rows="4" cols="50" required></textarea><br><br>
+        <input type="submit" value="Submit">
+    </form>
+    <h7>Delete NewComp</h7>
+    <form action="delnewcom" method="post">
+        <label for="userno">User No.:</label>
+        <input type="number" id="userno" name="userno" required><br><br>
+        <input type="submit" value="Delete">
+    </form>
+    <h8>Admin Menu</h8>
+    <form action="adminmenuchoice" method="post">
+        <input type="submit" value="Admin Menu">
+    </form>
+
+    <h9>Previous Comps Management System</h9>
+    <h2>Total IDs</h2>
+    <p>
+        <!-- Backend code will populate data here -->
+        Total IDs: <!-- Backend code will display total IDs here -->
+    </p>
+    <h10>Admin Menu</h10>
+    <form action="adminmenuchoice" method="post">
+        <input type="submit" value="Admin Menu">
+    </form>
+</body>
+</html>
